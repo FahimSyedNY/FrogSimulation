@@ -14,7 +14,7 @@ public class FrogSimulation
         goalDistance = dist;
         maxHops = numHops;
     }
-    /** Returns an integer representing the distance, in inches, to be moved when the frog hops.
+    /** Returns an integer in the range -100 - 100 representing the distance, in inches, to be moved when the frog hops.
      */
     private int hopDistance() {
         return (int) (Math.random() * 201 - 100);
@@ -39,13 +39,19 @@ public class FrogSimulation
      * successfully reached or passed the goal.
      * Precondition: num > 0
      */
-    public double runSimulations(int num) {
-        double won = 0;
-        double lost = 0;
+    public String runSimulations(int num) {
+        int won = 0;
+        int lost = 0;
         for (int i = 0; i < num; i++) {
             if (simulate()) won++; else lost++;
         }
-        System.out.println("Won: " + won + " Lost: " + lost);
-        return (won / lost);
+        return ("Won: " + won + " Lost: " + lost + "\n" + won / gcd(won, lost)) + ":" + (lost / gcd(won, lost) + "\nPercent won: " + ((double) won * 100 / num) + "%");
+    }
+    public static int gcd(int a, int b) {
+        if (b == 0) {
+            return a;
+        } else {
+            return gcd(b, a % b);
+        }
     }
 }
